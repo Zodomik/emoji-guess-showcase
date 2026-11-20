@@ -34,26 +34,24 @@ Built and published by **[Oğuz Tonyalı](https://github.com/Zodomik)**. This re
 | Area | Technologies | Role in the product |
 | --- | --- | --- |
 | Interface | Swift, SwiftUI | Home, puzzle and result flows with responsive game state. |
-| Content | JSON puzzle bundles, Foundation | Category-based content loading and puzzle models. |
+| Content | Node.js HTTP API, JSON, Foundation | Remote locale/category content with memory and disk caches. |
 | Answer evaluation | Unicode normalization, Levenshtein distance | Case/diacritic handling and limited typo tolerance. |
 | Product integrations | Firebase Analytics, Google Mobile Ads | Gameplay analytics and advertising integration. |
 | Device feedback | UIKit, AudioToolbox, Network | Haptics, audio feedback and connectivity observation. |
 
-## Engineering highlights
+## Implementation notes
 
-### Fair matching for human answers
+SwiftUI client; dependency-free Node.js HTTP content server; locale/category JSON storage; device disk cache and UserDefaults progress.
 
-Input is normalized before comparison. The matcher handles punctuation, spaces and diacritics, then uses edit distance with answer-length-dependent tolerance for small mistakes.
+- Unicode normalization and rolling-row Levenshtein answer matching.
+- Stable puzzle IDs and migration from count-based progress.
+- Locale-specific daily progress with a shared per-date reward marker.
 
-### Content separated from presentation
-
-Puzzle data lives in category bundles rather than being authored inside views. A puzzle store and model layer keep content loading separate from screen composition.
-
-### A coordinated round lifecycle
-
-The game view model owns puzzle progression, hints, rewards and result state. Analytics, ads and connectivity sit behind dedicated integration services.
-
-→ **[Explore the architecture and design decisions](docs/ENGINEERING.md)**
+| Read more | What is covered |
+| --- | --- |
+| [Architecture and frameworks](docs/ENGINEERING.md) | Runtime components, backend structure and framework responsibilities |
+| [Database and local data](docs/DATA_MODEL.md) | Entities, relationships, constraints and persistence choices |
+| [Algorithms and implementation choices](docs/ALGORITHMS.md) | Calculations, example flows and the limits of each approach |
 
 ## Try the product
 
